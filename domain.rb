@@ -45,8 +45,10 @@ end
 # Mutation 
 ############################################################
 class Mutation
-    def initialize(currency, amount)
-        @currency = Currency.new(currency)
+    def initialize(date, description, asset, amount)
+        @date = date
+        @description = description
+        @asset = asset
         @amount = amount
     end
 
@@ -69,33 +71,15 @@ end
 
 
 ############################################################
-# Transaction 
-############################################################
-class Transaction
-    def initialize(date, description, mutation)
-        @date = date
-        @description = description
-        @mutation = mutation
-    end
-
-    attr_reader :mutation
-
-    def +(transaction)
-        @mutation + transaction.mutation
-    end
-end
-
-
-############################################################
 # Account 
 ############################################################
 class Account
-    def initialize(transactions)
-        @transactions = transactions
+    def initialize(mutations)
+        @mutations = mutations
     end
 
     def balance
-        @transactions.map { |transaction| transaction.mutation.amount }
+        @mutations.map { |mutation| mutation.amount }
                      .sum Amount.ZERO
     end
 end

@@ -41,11 +41,11 @@ class ReportLine
         @isin = ISIN.new(line_array[3])
         @description = Description.new(line_array[4])
         @amount = AmountEntry.new(line_array[7]).to_amount
-        @mutation = Mutation.new(line_array[6], @amount)
+        @asset = Currency.new(line_array[6])
     end
 
-    def to_transaction
-        Transaction.new(@date_entry.to_date, @description, @mutation)       
+    def to_mutation
+        Mutation.new(@date_entry.to_date, @description, @asset, @amount)       
     end
 end
 
